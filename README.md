@@ -1,16 +1,27 @@
-# React + Vite
+# 小雪闯上海 (xiaoXue-adventure)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Roguelike 卡牌游戏，使用 React 19 + Vite 8 + PixiJS 8 构建。
 
-Currently, two official plugins are available:
+## 游戏特色
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **基因感染/突变卡牌系统** — 卡牌携带基因，打出后感染相邻卡牌，双基因触发突变组合技
+- **6 关卡冒险** — 穿越上海各大地标场景
+- **程序化 8-bit 音效** — Web Audio API 合成，无需音频文件
+- **Spine 角色动画** — 流畅的角色骨骼动画
+- **拖拽出牌机制** — 攻击牌拖拽至敌人，其他牌点击使用
 
-## React Compiler
+## 快速开始
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev      # 启动开发服务器
+npm run build    # 生产构建
+npm run preview  # 预览生产构建
+```
 
-## Expanding the ESLint configuration
+## 技术栈
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React 19
+- Vite 8
+- PixiJS 8
+- @esotericsoftware/spine-pixi
