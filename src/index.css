@@ -1,0 +1,168 @@
+/* ===== 全局响应式基础 ===== */
+:root {
+  /* 卡牌尺寸 */
+  --card-width: clamp(80px, 15vw, 140px);
+  --card-height: clamp(112px, 21vw, 190px);
+  --card-radius: 12;
+
+  /* 角色尺寸 */
+  --enemy-size: clamp(60px, 12vw, 100px);
+  --player-size: clamp(100px, 16vw, 180px);
+
+  /* 字号 */
+  --font-xs: clamp(8px, 1.2vw, 10px);
+  --font-sm: clamp(10px, 1.5vw, 12px);
+  --font-md: clamp(12px, 2vw, 14px);
+  --font-lg: clamp(14px, 2.5vw, 18px);
+  --font-xl: clamp(18px, 3.5vw, 28px);
+  --font-xxl: clamp(24px, 5vw, 42px);
+
+  /* 间距 */
+  --gap-sm: clamp(2px, 0.5vw, 6px);
+  --gap-md: clamp(6px, 1.5vw, 12px);
+  --gap-lg: clamp(10px, 2vw, 20px);
+
+  /* 战斗区域 */
+  --battle-height: 55vh;
+  --player-area-width: 25%;
+  --enemy-area-width: 75%;
+
+  /* 手牌区域 */
+  --hand-padding: clamp(8px, 2vw, 20px);
+  --hand-gap: clamp(3px, 1vw, 8px);
+  --hand-bottom: clamp(30px, 5vh, 50px);
+
+  /* 能量球 */
+  --energy-orb-size: clamp(28px, 5vw, 36px);
+  --energy-orb-font: clamp(12px, 2vw, 16px);
+
+  /* 血条 */
+  --hp-bar-width: clamp(80px, 14vw, 160px);
+  --hp-bar-height: clamp(10px, 1.8vw, 14px);
+
+  /* 意图标 */
+  --intent-icon-size: clamp(14px, 2.5vw, 18px);
+  --intent-dmg-font: clamp(10px, 2vw, 14px);
+
+  /* 敌人血条 */
+  --enemy-hp-width: clamp(30px, 6vw, 40px);
+  --enemy-atk-orb: clamp(26px, 5vw, 36px);
+}
+
+html {
+  font-size: clamp(12px, 2vw, 16px);
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #0a0a1a;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
+/* ===== 移动端竖屏适配 ===== */
+@media (max-width: 480px) and (orientation: portrait) {
+  :root {
+    --player-area-width: 100%;
+    --enemy-area-width: 100%;
+    --battle-height: 40vh;
+  }
+}
+
+/* ===== 移动端横屏适配 ===== */
+@media (max-width: 932px) and (orientation: landscape) {
+  :root {
+    --card-width: clamp(70px, 12vw, 100px);
+    --card-height: clamp(98px, 17vw, 140px);
+    --player-size: clamp(80px, 14vw, 140px);
+    --enemy-size: clamp(50px, 10vw, 80px);
+  }
+}
+
+/* ===== 平板适配 ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  :root {
+    --card-width: clamp(90px, 14vw, 130px);
+    --card-height: clamp(126px, 20vw, 180px);
+  }
+}
+
+/* ===== 共用关键帧动画 ===== */
+@keyframes hpPulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(220,38,38,0.4); }
+  50% { box-shadow: 0 0 16px rgba(220,38,38,0.9), 0 0 24px rgba(239,68,68,0.5); }
+}
+@keyframes armorBounce {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.35); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+@keyframes energyGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(59,130,246,0.5); }
+  50% { box-shadow: 0 0 14px rgba(59,130,246,0.8), 0 0 20px rgba(59,130,246,0.3); }
+}
+@keyframes buffFadeIn {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes playerFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes defendShieldFlash {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
+  40% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.2); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+}
+
+/* 玩家攻击：冲刺前方再弹回 */
+@keyframes playerAttackLunge {
+  0% { transform: translateX(0) scale(1); }
+  25% { transform: translateX(60px) scale(1.15); }
+  55% { transform: translateX(60px) scale(1.15); }
+  100% { transform: translateX(0) scale(1); }
+}
+/* 玩家受击：向后退缩再恢复 */
+@keyframes playerHitRecoil {
+  0% { transform: translateX(0) scale(1); }
+  20% { transform: translateX(-20px) scale(0.92); }
+  60% { transform: translateX(-20px) scale(0.92); }
+  100% { transform: translateX(0) scale(1); }
+}
+/* 敌人攻击：冲向玩家再弹回 */
+@keyframes enemyAttackLunge {
+  0% { transform: translateX(0) scale(1); }
+  25% { transform: translateX(-50px) scale(1.15); }
+  55% { transform: translateX(-50px) scale(1.15); }
+  100% { transform: translateX(0) scale(1); }
+}
+/* 敌人受击：向后退缩再恢复 */
+@keyframes enemyHitRecoil {
+  0% { transform: translateX(0) scale(1); }
+  20% { transform: translateX(20px) scale(0.9); }
+  60% { transform: translateX(20px) scale(0.9); }
+  100% { transform: translateX(0) scale(1); }
+}
+/* 敌人受击白色闪光 */
+@keyframes enemyHitFlash {
+  0% { opacity: 0.9; }
+  30% { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+
+@keyframes mapNodePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes mapNodeGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(222,184,135,0.4); }
+  50% { box-shadow: 0 0 25px rgba(222,184,135,0.7); }
+}
